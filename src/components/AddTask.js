@@ -1,24 +1,18 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import { dispatchContext, stateContext } from "../context/contextProvider";
 
-export default function AddTask() {
+export default function AddTask({ onAddTask }) {
   const [text, setText] = useState("");
-  const dispatch = useContext(dispatchContext);
-  const state = useContext(stateContext);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setText("");
-    // onAddTask(text);
-    dispatch({
-      type: "added",
-      id: state.nextId,
-      text,
-    });
-  };
+    onAddTask(text);
+  }  
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form
+      onSubmit={onSubmitHandler}
+    >
       <TextField
         placeholder="Add task"
         value={text}
